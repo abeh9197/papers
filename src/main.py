@@ -1,6 +1,8 @@
 from arxiv import fetch
-from utils.log import logger
+from deepl import translate
 from model.paper import Paper
+from utils.log import logger
+
 
 def main():
     """
@@ -9,9 +11,9 @@ def main():
     entries = fetch()
     papers = [Paper(entry=e) for e in entries]
     todays_entry = [paper for paper in papers if paper.is_todays_entry]
-    logger.debug(todays_entry[0].date)
-
-
+    for entry in todays_entry:
+        translated = translate(entry)
+        logger.debug(translated)
 
 
 if __name__ == "__main__":
